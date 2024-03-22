@@ -1,9 +1,8 @@
-package com.little_pay.challenge.unitTest;
+package com.little_pay.challenge.service;
 
 import com.little_pay.challenge.model.Tap;
 import com.little_pay.challenge.model.TapType;
 import com.little_pay.challenge.repository.TapRepository;
-import com.little_pay.challenge.service.TapProcessingService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

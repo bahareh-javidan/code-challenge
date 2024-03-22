@@ -1,12 +1,9 @@
-package com.little_pay.challenge.unitTest;
+package com.little_pay.challenge.service;
 
 import com.little_pay.challenge.model.Tap;
 import com.little_pay.challenge.model.TapType;
 import com.little_pay.challenge.model.Trip;
 import com.little_pay.challenge.model.TripStatus;
-import com.little_pay.challenge.service.CostProcessingService;
-import com.little_pay.challenge.service.TapProcessingService;
-import com.little_pay.challenge.service.TripProcessingService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
