@@ -1,14 +1,16 @@
 package com.little_pay.challenge.model;
 
 import com.opencsv.bean.CsvDate;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Tap implements Comparable<Tap> {
     private int id;
 

@@ -45,16 +45,16 @@ public class TapRepositoryImpl implements TapRepository {
     public List<Tap> readTaps() {
         Function<String, Tap> mapToItem = line -> {
             String[] recordArray = line.split(COMMA);
-            Tap item = new Tap();
-            item.setId(Integer.parseInt(recordArray[0].trim()));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d-M-yyyy H:m:s");
-            item.setDate(LocalDateTime.parse(recordArray[1].trim(), formatter));
-            item.setStatus(TapType.valueOf(recordArray[2].trim()));
-            item.setStop(recordArray[3].trim());
-            item.setCompany(recordArray[4].trim());
-            item.setBus(recordArray[5].trim());
-            item.setPan(recordArray[6].trim());
-            return item;
+
+            return Tap.builder()
+                    .id(Integer.parseInt(recordArray[0].trim()))
+                    .date(LocalDateTime.parse(recordArray[1].trim(), formatter))
+                    .status(TapType.valueOf(recordArray[2].trim()))
+                    .stop(recordArray[3].trim())
+                    .company(recordArray[4].trim())
+                    .bus(recordArray[5].trim())
+                    .pan(recordArray[6].trim()).build();
         };
 
 

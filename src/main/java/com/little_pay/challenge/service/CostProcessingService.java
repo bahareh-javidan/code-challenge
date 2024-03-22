@@ -12,40 +12,34 @@ import java.util.List;
 @RequiredArgsConstructor
 @Log4j2
 public class CostProcessingService {
-
     private final TapRepository tapRepository;
 
     public List<Cost> getTripCosts() {
         return tapRepository.readCosts();
     }
 
-
     public Double evaluateCharge(String origin, String destination) {
         List<Cost> tripCosts = getTripCosts();
-
-        Cost tripCost = findTripCost(origin, destination, tripCosts);
-
-        return tripCost != null ? tripCost.getAmount() : null;
+        return findTripCost(origin, destination, tripCosts);
     }
 
     public Double evaluateMaxCharge(String origin) {
         List<Cost> tripCosts = getTripCosts();
         return tripCosts.stream()
-                .filter(cost -> !cost.getOrigin().equals(origin))
+                .filter(cost -> cost.getOrigin().equalsIgnoreCase(origin) || cost.getDestination().equalsIgnoreCase(origin))
                 .mapToDouble(Cost::getAmount)
                 .max()
                 .orElse(0.0);
 
     }
 
-    private Cost findTripCost(String origin, String destination, List<Cost> tripCosts) {
+    private Double findTripCost(String origin, String destination, List<Cost> tripCosts) {
         for (Cost cost : tripCosts) {
             if ((origin.equalsIgnoreCase(cost.getOrigin()) && destination.equalsIgnoreCase(cost.getDestination())) ||
                     (origin.equalsIgnoreCase(cost.getDestination()) && destination.equalsIgnoreCase(cost.getOrigin()))) {
-                return cost;
+                return cost.getAmount();
             }
         }
-        return null; // No matching cost found
+        return 0D;
     }
-
 }

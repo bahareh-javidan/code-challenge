@@ -1,10 +1,12 @@
 package com.little_pay.challenge.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cost {
     private String origin;
     private String destination;

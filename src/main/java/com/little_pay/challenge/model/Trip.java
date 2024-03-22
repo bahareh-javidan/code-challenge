@@ -26,10 +26,10 @@ public class Trip {
         return new StringJoiner(", ", "", "")
                 .add(formatDate(t.getStarted()))
                 .add(formatDate(t.getFinished()))
-                .add(String.valueOf(t.getDurationInSecs()).concat("s"))
+                .add(String.valueOf(t.getDurationInSecs()))
                 .add(t.getFromStopId())
                 .add(t.getToStopId() != null ? t.getToStopId() : "")
-                .add(t.getChargeAmount() != null ? "$" + t.getChargeAmount() : "$0.0")
+                .add("$" + t.getChargeAmount())
                 .add(t.getCompanyId() != null ? t.getCompanyId() : "")
                 .add(t.getBusId() != null ? t.getBusId() : "")
                 .add(t.getPan())
@@ -38,7 +38,7 @@ public class Trip {
     }
 
     private static String formatDate(LocalDateTime date) {
-        return date != null ? date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) : "  No finish date  ";
+        return date != null ? date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) : "  date unavailable  ";
     }
 
     @Override

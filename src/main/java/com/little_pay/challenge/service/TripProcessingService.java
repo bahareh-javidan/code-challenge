@@ -23,7 +23,7 @@ public class TripProcessingService {
     private final CostProcessingService costProcessingService;
     private final TapProcessingService tapProcessingService;
 
-    public void processTrips() {
+    public List<Trip> processTrips() {
         List<Trip> trips = new ArrayList<>();
         Map<String, List<Tap>> groupedTaps = tapProcessingService.getGroupedTaps();
 
@@ -36,7 +36,7 @@ public class TripProcessingService {
                 Tap tap = tapList.get(rowIndex);
                 Tap matchingTap = tapProcessingService.findMatchingTap(tap, tapList);
                 if (matchingTap != null) {
-                    log.info("Tap: " + tap.getId() + ", Matching Tap: " + matchingTap.getId());
+                    log.info("Tap Id: " + tap.getId() + ", Matching Tap Id: " + matchingTap.getId());
 
                     if (matchingTap.getStop().equals(tap.getStop())) {
                         // Cancelled Trip
@@ -55,6 +55,10 @@ public class TripProcessingService {
             }
         });
 
+        return trips;
+    }
+
+    public void generateFile(List<Trip> trips) {
         generateTripCsvFile(trips);
     }
 
