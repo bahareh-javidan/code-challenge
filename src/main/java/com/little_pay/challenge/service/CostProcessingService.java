@@ -1,7 +1,5 @@
 package com.little_pay.challenge.service;
 
-import com.little_pay.challenge.exception.CostsNotAvailableException;
-import com.little_pay.challenge.exception.InvalidResourceRuntimeException;
 import com.little_pay.challenge.model.Cost;
 import com.little_pay.challenge.repository.TapRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +16,7 @@ public class CostProcessingService {
     private final TapRepository tapRepository;
 
     public List<Cost> getTripCosts() {
-        try {
-            return tapRepository.readCosts();
-        } catch (CostsNotAvailableException e) {
-            log.error("Cannot read from the cost.csv file. Please make sure that there is a csv file called cost.csv in resources folder");
-            throw new InvalidResourceRuntimeException();
-        }
+        return tapRepository.readCosts();
     }
 
 

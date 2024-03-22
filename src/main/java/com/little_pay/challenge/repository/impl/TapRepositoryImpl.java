@@ -1,8 +1,7 @@
 package com.little_pay.challenge.repository.impl;
 
-import com.little_pay.challenge.exception.CostsNotAvailableException;
 import com.little_pay.challenge.exception.FileGenerationException;
-import com.little_pay.challenge.exception.TapsNotAvailableException;
+import com.little_pay.challenge.exception.ResourceNotFoundException;
 import com.little_pay.challenge.model.Cost;
 import com.little_pay.challenge.model.Tap;
 import com.little_pay.challenge.model.TapType;
@@ -29,9 +28,8 @@ public class TapRepositoryImpl implements TapRepository {
     private static final String COSTS_FILE_PATH = "src/main/resources/cost.csv";
     private static final String TAPS_FILE_PATH = "src/main/resources/Tap.csv";
 
-
     @Override
-    public List<Cost> readCosts() throws CostsNotAvailableException {
+    public List<Cost> readCosts() {
         try {
             return new CsvToBeanBuilder<Cost>(new FileReader(COSTS_FILE_PATH))
                     .withType(Cost.class)
@@ -39,12 +37,12 @@ public class TapRepositoryImpl implements TapRepository {
                     .build()
                     .parse();
         } catch (FileNotFoundException e) {
-            throw new CostsNotAvailableException();
+            throw new ResourceNotFoundException(COSTS_FILE_PATH);
         }
     }
 
     @Override
-    public List<Tap> readTaps() throws TapsNotAvailableException {
+    public List<Tap> readTaps() {
         Function<String, Tap> mapToItem = line -> {
             String[] recordArray = line.split(COMMA);
             Tap item = new Tap();
@@ -70,13 +68,12 @@ public class TapRepositoryImpl implements TapRepository {
             br.close();
             return inputList;
         } catch (IOException e) {
-            log.error("Can not read from file: ", e);
-            throw new TapsNotAvailableException();
+            throw new ResourceNotFoundException(TAPS_FILE_PATH);
         }
     }
 
     @Override
-    public void exportToFile(List<String> tripToStrings) throws FileGenerationException {
+    public void exportToFile(List<String> tripToStrings) {
         Path newFilePath = Path.of(EXPORT_FILE_PATH);
         try {
             Files.deleteIfExists(newFilePath);

@@ -1,6 +1,5 @@
 package com.little_pay.challenge.service;
 
-import com.little_pay.challenge.exception.FileGenerationException;
 import com.little_pay.challenge.model.Tap;
 import com.little_pay.challenge.model.TapType;
 import com.little_pay.challenge.model.Trip;
@@ -24,7 +23,7 @@ public class TripProcessingService {
     private final CostProcessingService costProcessingService;
     private final TapProcessingService tapProcessingService;
 
-    public void processTrips() throws FileGenerationException {
+    public void processTrips() {
         List<Trip> trips = new ArrayList<>();
         Map<String, List<Tap>> groupedTaps = tapProcessingService.getGroupedTaps();
 
@@ -59,10 +58,9 @@ public class TripProcessingService {
         generateTripCsvFile(trips);
     }
 
-    private void generateTripCsvFile(List<Trip> trips) throws FileGenerationException {
+    private void generateTripCsvFile(List<Trip> trips) {
         List<String> tripToStrings = trips.stream().map(Trip::convertTripToString).toList();
         fileRepository.exportToFile(tripToStrings);
-
     }
 
     private Trip convertCompletedTrip(Tap item, Tap matchingItem) {

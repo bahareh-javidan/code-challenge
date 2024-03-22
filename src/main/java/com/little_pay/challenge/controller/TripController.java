@@ -1,6 +1,7 @@
 package com.little_pay.challenge.controller;
 
 import com.little_pay.challenge.exception.FileGenerationException;
+import com.little_pay.challenge.exception.ResourceNotFoundException;
 import com.little_pay.challenge.service.TripProcessingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -17,6 +18,8 @@ public class TripController {
             tripProcessingService.processTrips();
         } catch (FileGenerationException e) {
             log.error("Cannot create file to present the result. Make sure you have access or enough space to create file");
+        } catch (ResourceNotFoundException e) {
+            log.error("Cannot read from csv file. Please make sure that file exist in " + e.getResource());
         }
     }
 }

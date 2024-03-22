@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,12 +34,6 @@ public class TapProcessingService {
     }
 
     private List<Tap> getTaps() {
-        try {
-            return tapRepository.readTaps();
-        } catch (Exception e) {
-            log.error("Cannot read from file tap.csv. Please make sure there is a csv file called tap.csv in resources folder");
-            //todo: Handle exception
-            return new ArrayList<>();
-        }
+        return tapRepository.readTaps();
     }
 }

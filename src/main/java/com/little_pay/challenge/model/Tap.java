@@ -23,8 +23,7 @@ public class Tap implements Comparable<Tap> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Tap)) return false;
-        Tap tapItem = (Tap) o;
+        if (!(o instanceof Tap tapItem)) return false;
         return getId() == tapItem.getId() &&
                 getDate().equals(tapItem.getDate()) &&
                 getStatus() == tapItem.getStatus() &&

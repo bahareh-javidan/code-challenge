@@ -38,7 +38,7 @@ public class Trip {
     }
 
     private static String formatDate(LocalDateTime date) {
-        return date != null ? date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) : "  No finish date   ";
+        return date != null ? date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) : "  No finish date  ";
     }
 
     @Override
