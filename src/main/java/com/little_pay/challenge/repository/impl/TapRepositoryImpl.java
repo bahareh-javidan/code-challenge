@@ -8,6 +8,7 @@ import com.little_pay.challenge.model.TapType;
 import com.little_pay.challenge.repository.TapRepository;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
@@ -24,20 +25,26 @@ import java.util.function.Function;
 @Log4j2
 public class TapRepositoryImpl implements TapRepository {
     private static final String COMMA = ",";
-    private static final String EXPORT_FILE_PATH = "src/main/resources/trip.csv";
-    private static final String COSTS_FILE_PATH = "src/main/resources/cost.csv";
-    private static final String TAPS_FILE_PATH = "src/main/resources/Tap.csv";
+
+    @Value("${costs.file.path}")
+    private String costsFilePath;
+
+    @Value("${taps.file.path}")
+    private String tapsFilePath;
+
+    @Value("${export.file.path}")
+    private String exportFilePath;
 
     @Override
     public List<Cost> readCosts() {
         try {
-            return new CsvToBeanBuilder<Cost>(new FileReader(COSTS_FILE_PATH))
+            return new CsvToBeanBuilder<Cost>(new FileReader(costsFilePath))
                     .withType(Cost.class)
                     .withIgnoreLeadingWhiteSpace(true)
                     .build()
                     .parse();
         } catch (FileNotFoundException e) {
-            throw new ResourceNotFoundException(COSTS_FILE_PATH);
+            throw new ResourceNotFoundException(costsFilePath);
         }
     }
 
@@ -59,7 +66,7 @@ public class TapRepositoryImpl implements TapRepository {
 
 
         try {
-            File file = new File(TAPS_FILE_PATH);
+            File file = new File(tapsFilePath);
             InputStream inputFS = new FileInputStream(file);
             BufferedReader br = new BufferedReader(new InputStreamReader(inputFS));
 
@@ -68,13 +75,13 @@ public class TapRepositoryImpl implements TapRepository {
             br.close();
             return inputList;
         } catch (IOException e) {
-            throw new ResourceNotFoundException(TAPS_FILE_PATH);
+            throw new ResourceNotFoundException(tapsFilePath);
         }
     }
 
     @Override
     public void exportToFile(List<String> tripToStrings) {
-        Path newFilePath = Path.of(EXPORT_FILE_PATH);
+        Path newFilePath = Path.of(exportFilePath);
         try {
             Files.deleteIfExists(newFilePath);
             Files.write(newFilePath, "Started, Finished, DurationSecs, FromStopId, ToStopId, ChargeAmount, CompanyId, BusID, PAN, Status\n".getBytes());

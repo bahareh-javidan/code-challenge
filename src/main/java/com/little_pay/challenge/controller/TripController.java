@@ -23,7 +23,7 @@ public class TripController {
         } catch (FileGenerationException e) {
             log.error("Cannot create file to present the result. Make sure you have access or enough space to create file");
         } catch (ResourceNotFoundException e) {
-            log.error("Cannot read from csv file. Please make sure that file exist in " + e.getResource());
+            log.error("Cannot read from csv file. Please make sure that file exists in " + e.getResource());
         }
     }
 }
