@@ -58,11 +58,7 @@ public class TripProcessingService {
         return trips;
     }
 
-    public void generateFile(List<Trip> trips) {
-        generateTripCsvFile(trips);
-    }
-
-    private void generateTripCsvFile(List<Trip> trips) {
+    public void generateTripCsvFile(List<Trip> trips) {
         List<String> tripToStrings = trips.stream().map(Trip::convertTripToString).toList();
         fileRepository.exportToFile(tripToStrings);
     }

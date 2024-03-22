@@ -19,7 +19,7 @@ public class TripController {
     public void processTrips() {
         try {
             List<Trip> trips = tripProcessingService.processTrips();
-            tripProcessingService.generateFile(trips);
+            tripProcessingService.generateTripCsvFile(trips);
         } catch (FileGenerationException e) {
             log.error("Cannot create file to present the result. Make sure you have access or enough space to create file");
         } catch (ResourceNotFoundException e) {
